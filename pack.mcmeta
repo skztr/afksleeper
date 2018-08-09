@@ -1,0 +1,6 @@
+{
+	"pack": {
+		"pack_format": 3,
+		"description": "Allow Sleep, even when some players can't"
+	}
+}
