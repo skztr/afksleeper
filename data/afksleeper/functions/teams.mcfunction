@@ -12,6 +12,10 @@ tag @a remove afksleeper_team_god
 tag @a[tag=!afksleeper_team,tag=afksleeper_god] add afksleeper_team_god
 tag @a[tag=afksleeper_team_god] add afksleeper_team
 
+tag @a remove afksleeper_team_idle
+tag @a[tag=!afksleeper_team,tag=afksleeper_afk] add afksleeper_team_idle
+tag @a[tag=afksleeper_team_idle] add afksleeper_team
+
 tag @a remove afksleeper_team_afk
 tag @a[tag=!afksleeper_team,tag=afksleeper_afk] add afksleeper_team_afk
 tag @a[tag=afksleeper_team_afk] add afksleeper_team

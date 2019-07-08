@@ -23,16 +23,17 @@ to sleep. This is can be disabled by commenting-out the line
 
 in `data/afksleeper/functions/tick.mcfunction`.
 
-### AFK Timeout
-By default, the AFK timeout is one minute, which tends to catch anyone who has
+### Idle Timeout
+By default, the Idle timeout is one minute, which tends to catch anyone who has
 stepped away from their PC even briefly, in hopes of making it easier for those
-who are paying attention. If you want to adjust this timeout, change the line
+who are paying attention. If you want to adjust this timeout, adjust the score
+of the #afksleeper_global fake player:
 
-    scoreboard players set @a[tag=afksleeper_moving] sleeper_restless 1200
+    /scoreboard players set #afksleeper_global sleeper_idle_t <time in ticks>
 
-in `data/afksleeper/functions/classify.mcfunction`. This is the number of
-gameticks of inactivity prior to the player being considered to be AFK. There
-are 20 gameticks per second, so `1200` indicates a timeout of one minute.
+This is the number of gameticks of inactivity prior to the player being
+considered to be Idle. There are 20 gameticks per second, so `1200` indicates a
+timeout of one minute.
 
 ### Types of Motion
 Certain types of motion are ignored when deciding whether or not the player is

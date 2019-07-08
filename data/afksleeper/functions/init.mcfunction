@@ -1,3 +1,15 @@
+# Configuration options
+# There are 20 ticks per second, so (for example) a value of 1200 would indicate
+# one minute of restlessness. Neither Idle nor AFK players will count towards
+# those who are not sleeping, the difference is purely for team color asignment.
+scoreboard objectives add sleeper_idle_t dummy
+scoreboard objectives add sleeper_afk_t dummy
+
+# Set Configuration Defaults (unless the values have already been set)
+# We default to an idle timeout of 1 minutes, and an AFK timeout of 5 minutes.
+execute unless score #afksleeper_global sleeper_idle_t matches -1.. run scoreboard players set #afksleeper_global sleeper_idle_t 1200
+execute unless score #afksleeper_global sleeper_afk_t matches -1.. run scoreboard players set #afksleeper_global sleeper_idle_t 6000
+
 # z = "in a bed, with no restless players"
 scoreboard objectives add sleeper_z dummy
 
@@ -27,6 +39,9 @@ team modify afks_unknown color green
 
 team add afks_dead "Dead"
 team modify afks_dead color dark_red
+
+team add afks_idle "Idle"
+team modify afks_idle color dark_gray
 
 team add afks_afk "AFK"
 team modify afks_afk color black

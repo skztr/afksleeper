@@ -25,15 +25,20 @@ tag @a[scores={sleeper_r_walk=1..}] add afksleeper_moving
 tag @a[scores={sleeper_r_walkuw=1..}] add afksleeper_moving
 
 # A player is "restless" if they have been moving within the last N ticks
-# There are 20 ticks per second, so (for example) a value of 1200 would indicate
-# one minute of restlessness. Restlessness counts down by one per tick while the
-# player is immobile. When it reached 0, the player is considered to be AFK.
-scoreboard players set @a[tag=afksleeper_moving] sleeper_restless 1200
-scoreboard players remove @a[tag=!afksleeper_moving,scores={sleeper_restless=1..}] sleeper_restless 1
+scoreboard players set @a[tag=afksleeper_moving] sleeper_idle_t 0
+scoreboard players set @a[tag=afksleeper_moving] sleeper_afk_t 0
+scoreboard players add @e[type=minecraft:player,tag=!afksleeper_moving] sleeper_idle_t 1
+scoreboard players add @e[type=minecraft:player,tag=!afksleeper_moving] sleeper_afk_t 1
 
-# A player who has not moved for long enough that restlessness reaches 0, is AFK
+# A player whose AFK ticks have reached the configured sleeper_afk_t value is AFK
 tag @a remove afksleeper_afk
-tag @a[scores={sleeper_restless=0}] add afksleeper_afk
+execute as @a[tag=!afksleeper_moving] if score @s sleeper_afk_t > #afksleeper_global sleeper_afk_t run scoreboard players operation @s sleeper_afk_t = #afksleeper_global sleeper_afk_t
+execute as @a[tag=!afksleeper_moving] if score @s sleeper_afk_t = #afksleeper_global sleeper_afk_t run tag @s add afksleeper_afk
+
+# A non-AFK player whose Idle ticks have reached the configured sleeper_idle_t value is Idle
+tag @a remove afksleeper_idle
+execute as @a[tag=!afksleeper_moving] if score @s sleeper_idle_t > #afksleeper_global sleeper_idle_t run scoreboard players operation @s sleeper_idle_t = #afksleeper_global sleeper_idle_t
+execute as @a[tag=!afksleeper_moving,tag=!afksleeper_afk] if score @s sleeper_idle_t = #afksleeper_global sleeper_idle_t run tag @s add afksleeper_idle
 
 # Reset all motion statistics in preparation for the next gametick
 scoreboard players set @a sleeper_r_aviate 0
@@ -68,6 +73,7 @@ tag @e[type=minecraft:player] remove afksleeper_dead
 
 # a player is considered awake only if they are in a position to sleep
 tag @a add afksleeper_awake
+tag @a[tag=afksleeper_idle] remove afksleeper_awake
 tag @a[tag=afksleeper_afk] remove afksleeper_awake
 tag @a[tag=afksleeper_god] remove afksleeper_awake
 tag @a[tag=afksleeper_sleeping] remove afksleeper_awake
