@@ -63,10 +63,10 @@ tag @a[gamemode=adventure] add afksleeper_god
 tag @a[gamemode=spectator] add afksleeper_god
 
 tag @a remove afksleeper_in_the_nether
-tag @a[nbt={Dimension:-1}] add afksleeper_in_the_nether
+tag @a[nbt={Dimension:"minecraft:the_nether"}] add afksleeper_in_the_nether
 
 tag @a remove afksleeper_in_the_end
-tag @a[nbt={Dimension:1}] add afksleeper_in_the_end
+tag @a[nbt={Dimension:"minecraft:the_end"}] add afksleeper_in_the_end
 
 tag @a add afksleeper_dead
 tag @e[type=minecraft:player] remove afksleeper_dead
